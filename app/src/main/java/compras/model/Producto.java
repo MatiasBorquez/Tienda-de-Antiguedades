@@ -3,16 +3,16 @@ package compras.model;
 public class Producto {
     private String nombre;
     private Integer cantidad;
-    private Float precio;
-    private Float porcentajeImpuestos;
+    private Double precio;
+    private Double porcentajeImpuestos;
     private Integer id;
     private static Integer count = 1;
     private Boolean nacional;
-    private Float retencion = (float) 0.02;
-    private Float aduana = (float) 0.01;
-    private Float transporte = (float) 0.005;
+    private Double retencion = 0.02;
+    private Double aduana = 0.01;
+    private Double transporte = 0.005;
 
-    public Producto(String nombre, Integer cantidad, Float precio, Float porcentajeImpuestos, Boolean nacional) {
+    public Producto(String nombre, Integer cantidad, Double precio, Double porcentajeImpuestos, Boolean nacional) {
         this.nombre = nombre;
         this.cantidad = cantidad;
         this.porcentajeImpuestos = porcentajeImpuestos/100;
@@ -30,11 +30,11 @@ public class Producto {
         return cantidad;
     }
 
-    public Float getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
-    public Float getPorcentajeImpuestos() {
+    public Double getPorcentajeImpuestos() {
         return porcentajeImpuestos;
     }
 

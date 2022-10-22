@@ -2,60 +2,88 @@ package compras.model;
 
 import java.util.*;
 
+import compras.Error.ExisteExc;
 import compras.Error.InexistenteExc;
-import compras.Error.NoModificado;
 
 public class ListaPedidos {
-    private List<Pedido> listaPedidos;
+    List<Pedido> pedidos;
 
     public ListaPedidos() {
-        listaPedidos = new ArrayList<>();
+        pedidos = new ArrayList<>();
     }
 
-    public List<Pedido> getListaPedidos() {
-        return listaPedidos;
+    public List<Pedido> getPedidos() {
+        return pedidos;
     }
 
     public void agregarPedido(Pedido pedido){
-        listaPedidos.add(pedido);
+        if(Inexistente(pedido)){
+            pedidos.add(pedido);
+        }
+        
     }
 
-    public Boolean eliminarPedido(Pedido pedido){
-        if(listaPedidos.contains(pedido)){
-            listaPedidos.remove(pedido);
-        }else{
-            try {
-                throw new InexistenteExc("Pedido");
-            } catch (InexistenteExc e) {
-                e.printStackTrace();
-                return false;
+    public void eliminarPedido(Pedido pedido){
+        if (existe(pedido)) {
+            pedidos.remove(pedido);
+        }
+    }
+
+    public void modificarPedido(Pedido lineaModificar,Pedido lineaModificada){
+        eliminarPedido(lineaModificar);
+        agregarPedido(lineaModificada);
+    }
+
+    public Integer cantida(){
+        return pedidos.size();
+    }
+
+    public Boolean existe(Pedido pedido){
+        Boolean existe = false;
+        for (Pedido p : pedidos) {
+            if(p.getIdPedido().equals(pedido.getIdPedido())){
+               existe = true; 
             }
         }
-        return true;
+        if (!existe) {
+            try {
+                throw new ExisteExc("Producto en la lista");
+            } catch (ExisteExc e) {
+                e.printStackTrace();
+            }
+        }
+        return existe;
     }
 
-    public Pedido BuscarPedido(Integer id){
-        for (Pedido c : listaPedidos) {
-            if (c.getIdCliente().equals(id)) {
-                return c;
+    public Pedido buscarPedido(Integer idPedido){
+        for (Pedido pedido : pedidos) {
+            if (pedido.getIdPedido().equals(idPedido)) {
+                return pedido;
             }
+        }
+        try {
+            throw new InexistenteExc();
+        } catch (InexistenteExc e) {
+            e.printStackTrace();
         }
         return null;
     }
 
-    public void modificarPedido(Pedido pedidoModificar,Pedido pedidoModificado){
-        Boolean err;
-        err = eliminarPedido(pedidoModificado);
-        if (err) {
-            agregarPedido(pedidoModificado);
-        } else {
+    public Boolean Inexistente(Pedido pedido){
+        Boolean existe = true;
+        for (Pedido p : pedidos) {
+            if(p.getIdPedido().equals(pedido.getIdPedido())){
+               existe = false; 
+            }
+        }
+        if (!existe) {
             try {
-                throw new NoModificado("Pedido");
-            } catch (NoModificado e) {
-                // TODO Auto-generated catch block
+                throw new InexistenteExc("Producto en la lista");
+            } catch (InexistenteExc e) {
                 e.printStackTrace();
             }
         }
+        return existe;
     }
     
 }

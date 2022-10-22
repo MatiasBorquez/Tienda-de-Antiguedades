@@ -1,6 +1,6 @@
 package compras.model;
 
-import java.util.List;
+import compras.Error.InexistenteExc;
 
 public class LineaPedido {
     private Integer idProducto;
@@ -21,8 +21,18 @@ public class LineaPedido {
         return idProducto;
     }
 
-    public Producto verProducto(List<Producto> listaProductos){
-        return listaProductos.get(idProducto-1);
+    public Producto verProducto(ListaProductos listaProductos){
+        for (Producto producto : listaProductos.getProductos()) {
+            if (producto.getId().equals(idProducto)) {
+                return producto;
+            }
+        }
+        try {
+            throw new InexistenteExc();
+        } catch (InexistenteExc e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     

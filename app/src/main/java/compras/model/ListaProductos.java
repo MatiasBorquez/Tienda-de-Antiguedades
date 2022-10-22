@@ -2,66 +2,89 @@ package compras.model;
 
 import java.util.*;
 
+import compras.Error.ExisteExc;
 import compras.Error.InexistenteExc;
 import compras.Error.NoModificado;
 
 public class ListaProductos {
-    private List<Producto> listaProductos;
+    Set<Producto> productos;
 
     public ListaProductos() {
-        listaProductos = new ArrayList<>();
+        productos = new HashSet<>();
     }
-    
-    public List<Producto> getListaProductos() {
-        return listaProductos;
+
+    public Set<Producto> getProductos() {
+        return productos;
     }
 
     public void agregarProducto(Producto producto){
-        listaProductos.add(producto);
-    }
-
-    public Boolean eliminaProducto(Producto producto){
-        if (listaProductos.contains(producto)) {
-            listaProductos.remove(producto);
-            return true;
-        } else {
-            try {
-                throw new InexistenteExc("producto");
-            } catch (InexistenteExc e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }return false;
+        if(Inexistente(producto)){
+            productos.add(producto);
+        }
         
     }
 
-    public Producto buscarProducto(Integer id){
-        for (Producto producto : listaProductos) {
-            if (producto.getId().equals(id)) {
-                return producto;
+    public void eliminarProducto(Producto producto){
+        if (existe(producto)) {
+            productos.remove(producto);
+        }
+    }
+
+    public void modificarProducto(Producto lineaModificar,Producto lineaModificada){
+        eliminarProducto(lineaModificar);
+        agregarProducto(lineaModificada);
+    }
+
+    public Integer cantida(){
+        return productos.size();
+    }
+
+    public Boolean existe(Producto producto){
+        Boolean existe = false;
+        for (Producto p : productos) {
+            if(p.getId().equals(producto.getId())){
+               existe = true; 
+            }
+        }
+        if (!existe) {
+            try {
+                throw new ExisteExc("Producto en la lista");
+            } catch (ExisteExc e) {
+                e.printStackTrace();
+            }
+        }
+        return existe;
+    }
+
+    public Producto buscarProducto(Integer idProducto){
+        for (Producto p : productos) {
+            if (p.getId().equals(idProducto)) {
+                return p;
             }
         }
         try {
-            throw new InexistenteExc("producto");
+            throw new InexistenteExc();
         } catch (InexistenteExc e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;
     }
 
-    public void modificarProducto(Producto productoModificar,Producto productoModificado){
-        Boolean err = eliminaProducto(productoModificar);
-        if (err) {
-            agregarProducto(productoModificado);
-        } else {
+    public Boolean Inexistente(Producto producto){
+        Boolean existe = true;
+        for (Producto p : productos) {
+            if(p.getId().equals(producto.getId())){
+               existe = false; 
+            }
+        }
+        if (!existe) {
             try {
-                throw new NoModificado("Producto");
-            } catch (NoModificado e) {
-                // TODO Auto-generated catch block
+                throw new InexistenteExc("Producto en la lista");
+            } catch (InexistenteExc e) {
                 e.printStackTrace();
             }
         }
+        return existe;
     }
 
 

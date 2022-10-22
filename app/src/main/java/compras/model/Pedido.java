@@ -1,41 +1,21 @@
 package compras.model;
 
-import java.util.List;
-
-import javax.swing.JOptionPane;
-
 public class Pedido {
     private Integer idCliente;
-    private List<LineaPedido> lineaPedidos;
+    private TotalLineaPedidos lineaPedidos;
     private FormaPagos formaPago;
     private Integer idPedido;
-    private static Integer count=1;
+    private static Integer count = 1;
     private Float totalAPagar;
 
-
-    public Pedido(Integer idCliente, FormaPagos formaPago, List<LineaPedido> lineasPedidos) {
+    public Pedido(Integer idCliente, FormaPagos formaPago, TotalLineaPedidos lineasPedidos) {
         this.idCliente = idCliente;
         this.formaPago = formaPago;
         lineaPedidos = lineasPedidos;
         idPedido = count++;
     }
 
-    public List<Producto> agregarProducto(Integer idProductos, Integer cantidad, List<Producto> listaProductos){
-        Producto producto = listaProductos.get(idProductos-1);
-        if(producto.getCantidad()-cantidad >=0){
-            lineaPedidos.add(new LineaPedido(idProductos, cantidad));
-            producto.setCantidad(producto.getCantidad()-cantidad);
-            listaProductos.set(idProductos-1, null);
-            totalAPagar =  (listaProductos.get(idProductos).getPrecio() * listaProductos.get(idProductos).getCantidad());
-        }else{
-            JOptionPane.showMessageDialog(null, "ERROR\n No posee la cantidad para realizar la venta");
-            return listaProductos;
-        }
-        return listaProductos;
-        
-    }
-
-    public List<LineaPedido> getLineaPedidos() {
+    public TotalLineaPedidos getLineaPedidos() {
         return lineaPedidos;
     }
 
@@ -55,11 +35,13 @@ public class Pedido {
         return idPedido;
     }
 
-    public Float getTotalAPagar() {
-        return totalAPagar;
+    /*
+    public Float getTotalAPagar(ListaProductos productos) {
+        Producto producto;
+        for (LineaPedido linea : lineaPedidos.getLineasPedidos()) {
+            producto = linea.verProducto(productos);
+            productos.
+        }
     }
-
-    
-
-    
+ */
 }

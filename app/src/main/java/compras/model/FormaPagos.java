@@ -1,14 +1,16 @@
 package compras.model;
 
+import java.time.LocalDate;
+
 public class FormaPagos {
     enum metodo{Tarjeta, Cheque, Efectivo}
     private metodo metodoPago;
-    private Integer numeroDeTarjeta;
-    private String fechaDeVencimiento;
+    private Double numeroDeTarjeta;
+    private LocalDate fechaDeVencimiento;
     private Integer codigo;
     private String numCheque;
 
-    public FormaPagos(Integer numeroDeTarjeta, String fechaDeVencimiento, Integer codigo) {
+    public FormaPagos(Double numeroDeTarjeta, LocalDate fechaDeVencimiento, Integer codigo) {
         this.numeroDeTarjeta = numeroDeTarjeta;
         this.fechaDeVencimiento = fechaDeVencimiento;
         this.codigo = codigo;
