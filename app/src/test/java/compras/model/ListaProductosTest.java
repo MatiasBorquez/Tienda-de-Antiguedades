@@ -33,8 +33,8 @@ public class ListaProductosTest {Cliente cliente1;
 
     @Test
     void testBuscarProducto() {
-        assertEquals(productos.buscarProducto(1), producto1);
-        assertEquals(productos.buscarProducto(2), producto2);
+        assertEquals(productos.buscarProducto(producto1.getId()), producto1);
+        assertEquals(productos.buscarProducto(producto2.getId()), producto2);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ListaProductosTest {Cliente cliente1;
     @Test
     void testModificarProducto() {
         productos.modificarProducto(producto2, producto3);
-        assertEquals(productos.buscarProducto(3), producto3);
+        assertEquals(productos.buscarProducto(producto3.getId()), producto3);
         assertTrue(productos.Inexistente(producto2));
     }
 }

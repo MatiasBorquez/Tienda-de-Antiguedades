@@ -79,7 +79,7 @@ public class TotalLineaPedidos {
         }
         if (!existe) {
             try {
-                throw new InexistenteExc("Producto en la lista");
+                throw new InexistenteExc("Pedido en la lista");
             } catch (InexistenteExc e) {
                 e.printStackTrace();
             }

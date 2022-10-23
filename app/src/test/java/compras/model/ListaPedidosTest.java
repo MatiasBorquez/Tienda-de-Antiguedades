@@ -46,12 +46,10 @@ public class ListaPedidosTest {
         totalPedido2.agregarLineaPedido(lineaPedido4);
         totalPedido1.agregarLineaPedido(lineaPedido1);
         totalPedido1.agregarLineaPedido(lineaPedido3);
-        pago1 = new FormaPagos();
-        pago2 = new FormaPagos();
         pago1 = new FormaPagos(541324118618.0, LocalDate.now(), 536);
         pago2 = new FormaPagos();
         pedido1 = new Pedido(1, pago1, totalPedido1);
-        pedido2 = new Pedido(1, pago2, totalPedido1);
+        pedido2 = new Pedido(2, pago2, totalPedido2);
         pedidos = new ListaPedidos();
         pedidos.agregarPedido(pedido1);
         pedidos.agregarPedido(pedido2);
@@ -64,6 +62,12 @@ public class ListaPedidosTest {
     }
 
     @Test
+    void testBuscarPedido() {
+        assertEquals(pedidos.buscarPedido(pedido1.getIdPedido()), pedido1);
+        assertEquals(pedidos.buscarPedido(pedido2.getIdPedido()), pedido2);
+    }
+
+    @Test
     void testModificarPedido() {
         TotalLineaPedidos totalPedido3 = new TotalLineaPedidos();
         totalPedido3.agregarLineaPedido(lineaPedido2);
@@ -71,15 +75,10 @@ public class ListaPedidosTest {
         Pedido pedido3 = new Pedido(1, pago2, totalPedido3);
         pedidos.modificarPedido(pedido1, pedido3);
         assertTrue(pedidos.existe(pedido3));
-        assertTrue(pedidos.Inexistente(pedido3));
+        assertTrue(pedidos.Inexistente(pedido1));
 
     }
 
-    @Test
-    void testBuscarPedido() {
-        assertEquals(pedidos.buscarPedido(1), pedido1);
-        assertEquals(pedidos.buscarPedido(2), pedido2);
-    }
 
     @Test
     void testEliminarPedido() {
