@@ -46,5 +46,7 @@ public class FormaPagos {
 
         return VerMetodo();
     }
+
+    
 }
 

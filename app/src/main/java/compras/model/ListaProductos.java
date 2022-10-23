@@ -4,7 +4,6 @@ import java.util.*;
 
 import compras.Error.ExisteExc;
 import compras.Error.InexistenteExc;
-import compras.Error.NoModificado;
 
 public class ListaProductos {
     Set<Producto> productos;
